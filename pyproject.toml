@@ -21,6 +21,7 @@ dependencies = [
     "loguru",
     "matplotlib",
     "mkdocs",
+    "nbstripout>=0.8.1",
     "notebook",
     "numpy",
     "pandas",
@@ -28,8 +29,10 @@ dependencies = [
     "python-dotenv",
     "ruff",
     "scikit-learn",
+    "seaborn>=0.13.2",
     "tqdm",
     "typer",
+    "wordcloud>=1.9.4",
 ]
 requires-python = "~=3.10.0"
 

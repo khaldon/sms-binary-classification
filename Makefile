@@ -6,6 +6,7 @@ PROJECT_NAME = sms-binary-classification
 PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
+
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
@@ -50,6 +51,7 @@ create_environment:
 	@echo ">>> Windows: .\\\\.venv\\\\Scripts\\\\activate"
 	@echo ">>> Unix/macOS: source ./.venv/bin/activate"
 	
+
 
 
 
