@@ -4,7 +4,7 @@ from loguru import logger
 from tqdm import tqdm
 import typer
 
-from sms_binary_classification.config import FIGURES_DIR, PROCESSED_DATA_DIR
+from src.config import FIGURES_DIR, PROCESSED_DATA_DIR
 
 app = typer.Typer()
 

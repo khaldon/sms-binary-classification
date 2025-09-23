@@ -1,1 +1,1 @@
-from sms_binary_classification import config  # noqa: F401
+from src import config  # noqa: F401
