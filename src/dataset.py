@@ -23,7 +23,6 @@ DEFAULT_TEST_FILENAME = "test_set.csv"
 # 1. LOAD TRAIN DATA
 # ====================
 def load_train_data(input_path) -> pd.DataFrame:
-    """Load pre-split train set."""
     input_path = input_path or (PROCESSED_DATA_DIR / DEFAULT_TRAIN_FILENAME)
     logger.info(f"📥 Loading train set from {input_path}")
 
@@ -31,7 +30,6 @@ def load_train_data(input_path) -> pd.DataFrame:
         raise FileNotFoundError(f"❌ Train file not found: {input_path}")
 
     df = pd.read_csv(input_path)
-
     # Validate required columns
     required = {"label", "message"}
     missing = required - set(df.columns)
@@ -40,7 +38,7 @@ def load_train_data(input_path) -> pd.DataFrame:
     assert not df.isnull().any().any(), "❌ Missing values in train set"
 
     spam_ratio = df["label"].value_counts(normalize=True).get("spam", 0)
-    logger.info(f"✅ Loaded train set: {len(df):,} rows. Spam ratio: {spam_ratio:.2%}")
+    logger.info(f"✅ Loaded train set: {len(df):,} rows. Spam ratio: {spam_ratio:.1%}")
     return df
 
 
@@ -85,7 +83,7 @@ def clean_text(text: str) -> str:
 def feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
     """Add new features based on EDA."""
     df = df.copy()
-
+    def_len_col = len(df.columns)
     df["char_count"] = df["message"].str.len()
     df["word_count"] = df["message"].str.split().str.len()
     df["cap_ratio"] = df["message"].apply(
@@ -101,8 +99,9 @@ def feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
         .str.contains(r"free|win|prize|urgent|claim|congratulations", case=False)
         .astype(int)
     )
-
-    logger.info("✅ Engineered 7 new features.")
+    after_col_len = len(df.columns)
+    eng_len_col = after_col_len - def_len_col
+    logger.info(f"✅ Engineered {eng_len_col} new features.")
     return df
 
 
@@ -124,8 +123,8 @@ def encode_labels(df: pd.DataFrame) -> pd.DataFrame:
 # ====================
 def save_processed_sets(
     train: pd.DataFrame,
-    test: pd.DataFrame,
-    output_dir,
+    test: pd.DataFrame,       
+    output_dir: Path,
     dry_run: bool = False,
 ):
     """Save train and test sets as parquet files."""
@@ -150,9 +149,9 @@ def save_processed_sets(
 # 7. MAIN PIPELINE
 # ====================
 def run_preprocessing(
-    input_path: Path = None,
-    test_path: Path = None,
-    output_dir: Path = None,
+    input_path,
+    test_path,
+    output_dir,
     dry_run: bool = False,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
