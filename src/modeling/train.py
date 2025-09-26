@@ -64,9 +64,9 @@ def main():
     y_test = test[TARGET_COLUMN]
 
     model = train_model(X_train, y_train)
-    
+
     acc, y_pred = evaluate_model(model, X_test, y_test)
-    save_model(model, MODELS_DIR / "Logistic_regresion.pkl")
+    save_model(model, MODELS_DIR / "Logistic_regression.pkl")
     logger.success("Training pipeline completed")
 
 
