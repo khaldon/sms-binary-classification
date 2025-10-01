@@ -63,7 +63,13 @@ create_environment:
 ## Make dataset
 .PHONY: data
 data: requirements
-	$(PYTHON_INTERPRETER) sms_binary_classification/dataset.py
+	$(PYTHON_INTERPRETER) src/dataset.py
+
+
+.PHONY: train
+train: requirements
+	$(PYTHON_INTERPRETER) src/modeling/train.py
+
 
 
 #################################################################################

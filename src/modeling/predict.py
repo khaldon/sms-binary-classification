@@ -1,6 +1,6 @@
 from pathlib import Path
 import pickle
-from typing import List, Optional
+from typing import Optional
 
 from loguru import logger
 import pandas as pd
@@ -13,7 +13,7 @@ from src.modeling.train import FEATURE_COLUMNS
 
 def load_model(model_path: Optional[Path] = None):
     """Load trained model from disk"""
-    model_path = model_path or (MODELS_DIR / "Logistic_regression.pkl")
+    model_path = model_path or (MODELS_DIR / "xg_boosting.pkl")
     with open(model_path, "rb") as f:
         model = pickle.load(f)
     logger.info(f"Model loaded from {model_path}")
@@ -46,10 +46,12 @@ app = typer.Typer()
 
 @app.command()
 def main(
-    message: str = typer.Option(..., "--message", "-m", help="SMS message to classify")
+    # message: str = typer.Option(..., "--message", "-m", help="SMS message to classify")
 ):
     """Classify a single SMS message as spam or ham"""
-    result = predict_spam(message)
+    result = predict_spam(
+        "APPROVED: You qualify for $50,000 loan at 1% interest! No credit check. Apply now: http://instant-loans-usa.com"
+    )
     typer.echo(f"Result: {result}")
 
 
