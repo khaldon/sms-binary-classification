@@ -1,0 +1,10 @@
+{
+    "spam_recall": 0.76,
+    "spam_precision": 0.8976377952755905,
+    "spam_f1": 0.8231046931407943,
+    "ham_recall": 0.9865284974093265,
+    "ham_precision": 0.9635627530364372,
+    "accuracy": 0.9560538116591928,
+    "support_spam": 150,
+    "support_ham": 965
+}
