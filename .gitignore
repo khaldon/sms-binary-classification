@@ -1,5 +1,6 @@
 # Data
 /data/
+
 /reports/figures
 # Mac OS-specific storage files
 .DS_Store
@@ -192,3 +193,5 @@ cython_debug/
 .pypirc
 
 *.pkl 
+
+

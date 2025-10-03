@@ -60,6 +60,11 @@ python src/modeling/predict.py -m "YOUR MESSAGE"
 # OR 
 make predict TEXT="YOUR MESSAGE"
 ```
+### Illustration 
+![sms-spam](data/external/sms-spam.gif)
+
+
+
 To classify your own message, edit the `main()` in `predict.py` you can either use CLI input or hardcoded the message. 
 
 | Model                   | Precision   | Recall   | F1-Score   | Accuracy   |
