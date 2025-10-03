@@ -2,10 +2,11 @@ from pathlib import Path
 import pickle
 
 from loguru import logger
+import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, precision_recall_curve
 from xgboost import XGBClassifier
 
 from src.config import MODELS_DIR, PROCESSED_DATA_DIR
@@ -71,6 +72,17 @@ def save_model(model, path: Path):
     logger.info(f"Model saved to {path}")
 
 
+def find_optimal_threshold(y_true, y_proba, min_recall=0.76, min_precision=0.898):
+    precisions, recalls, thresholds = precision_recall_curve(y_true, y_proba)
+    # Iterate from high recall to low (reverse order)
+    for i in range(len(thresholds)):
+        if recalls[i] >= min_recall and precisions[i] >= min_precision:
+            return thresholds[i]
+    # Fallback: return threshold that maximizes F1
+    f1_scores = 2 * (precisions * recalls) / (precisions + recalls + 1e-8)
+    return thresholds[np.argmax(f1_scores)]
+
+
 def main():
     logger.info("Starting model training...")
 
@@ -87,6 +99,11 @@ def main():
     evaluate_model(lr_model, X_test, y_test)
     evaluate_model(rf_model, X_test, y_test)
     evaluate_model(xg_model, X_test, y_test)
+    y_proba = xg_model.predict_proba(X_test)[:, 1]
+    optimal_thresh = find_optimal_threshold(y_test, y_proba)
+    logger.info(f"Optimal threshold: {optimal_thresh:.4f}")
+    with open(MODELS_DIR / "threshold.txt", "w") as f:
+        f.write(str(optimal_thresh))
     save_model(lr_model, MODELS_DIR / "Logistic_regression.pkl")
     save_model(rf_model, MODELS_DIR / "random_forest.pkl")
     save_model(xg_model, MODELS_DIR / "xg_boosting.pkl")

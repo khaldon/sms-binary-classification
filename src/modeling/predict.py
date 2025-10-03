@@ -28,17 +28,18 @@ def preprocess_message(message: str):
     return df[FEATURE_COLUMNS]
 
 
-def predict_spam(message: str, model=None):
+def predict_spam(message: str, model=None, threshold=None):
     """Predict if a message is spam or ham"""
     if model is None:
         model = load_model()
+    if threshold is None: 
+        threshold = float(open(MODELS_DIR / "threshold.txt").read())
 
     X = preprocess_message(message)
 
-    prediction = model.predict(X)[0]
-    label = "spam" if prediction == 1 else "ham"
-    logger.info(f"Message: '{message}' -> {label.upper()}")
-    return label
+    prob = model.predict_proba(X)[0,1]
+    prediction = 1 if prob >= threshold else 0
+    return "spam" if prediction == 1 else "ham"
 
 
 app = typer.Typer()

@@ -24,7 +24,7 @@ uv sync
 ```
 #### 2. Dataset
 This is the dataset used in this model to quick start:
-[SMS Spam collection Dataset](https://www.kaggle.com/datasets/uciml/sms-spam-collection-dataset)
+[SMS Spam collection Dataset](https://archive.ics.uci.edu/ml/datasets/sms+spam+collection)
 
 you have to run first `notebooks/01_eda.ipynb`to split the dataset to trainset and testset ***just to prevent the data leakage***. 
 you will find the splitting in `data/processed/`.
@@ -118,3 +118,6 @@ Full evaluation in:
 ```
 --------
 
+[Model Card](reports/model_card.md) – Full transparency on model behavior, limitations, and ethics
+
+---
