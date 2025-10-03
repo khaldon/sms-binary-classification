@@ -49,7 +49,16 @@ make train
 ### 4. Make a prediction
 
 ```bash
-python src/modeling/predict.py
+
+# if you want to use the default spam message
+python src/modeling/predict.py 
+# OR 
+make predict 
+
+#if you want to add custom message 
+python src/modeling/predict.py -m "YOUR MESSAGE"
+# OR 
+make predict TEXT="YOUR MESSAGE"
 ```
 To classify your own message, edit the `main()` in `predict.py` you can either use CLI input or hardcoded the message. 
 
@@ -67,6 +76,10 @@ To classify your own message, edit the `main()` in `predict.py` you can either u
 Model: XGBoost (outperformed Logistic Regression and Random Forest)
 
 Features: Text length, capitalization ratio, punctuation counts, keyword flags (free, win, urgent, etc.)
+
+**Note: This model is trained on English-language SMS. Performance may degrade on non-English or highly obfuscated spam.**
+
+
 
 Full evaluation in:
 

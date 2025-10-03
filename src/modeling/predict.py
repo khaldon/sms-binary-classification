@@ -43,15 +43,15 @@ def predict_spam(message: str, model=None):
 
 app = typer.Typer()
 
+spam_text = "APPROVED: You qualify for $50,000 loan at 1% interest! No credit check. Apply now: http://instant-loans-usa.com"
+
 
 @app.command()
 def main(
-    # message: str = typer.Option(..., "--message", "-m", help="SMS message to classify")
+    message: str = typer.Option(spam_text, "--message", "-m", help="This optional")
 ):
     """Classify a single SMS message as spam or ham"""
-    result = predict_spam(
-        "APPROVED: You qualify for $50,000 loan at 1% interest! No credit check. Apply now: http://instant-loans-usa.com"
-    )
+    result = predict_spam(message=message)
     typer.echo(f"Result: {result}")
 
 

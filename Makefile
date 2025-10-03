@@ -7,6 +7,7 @@ PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
 
+
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
@@ -69,6 +70,15 @@ data: requirements
 .PHONY: train
 train: requirements
 	$(PYTHON_INTERPRETER) src/modeling/train.py
+
+
+
+SCRIPT_PATH = src/modeling/predict.py
+TEXT ?= "APPROVED: You qualify for $50,000 loan at 1% interest! No credit check. Apply now: http://instant-loans-usa.com"
+
+.PHONY: predict
+predict: requirements
+	$(PYTHON_INTERPRETER) $(SCRIPT_PATH) -m '$(TEXT)'
 
 
 
