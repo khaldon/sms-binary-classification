@@ -90,6 +90,7 @@ Full evaluation in:
 
 `notebooks/evaluation_model.ipynb`
 
+>Evaluation metrics are auto-generated during training and saved in `reports/`
 
 ## Output Locations
 
