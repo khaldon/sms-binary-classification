@@ -32,19 +32,20 @@ def predict_spam(message: str, model=None, threshold=None):
     """Predict if a message is spam or ham"""
     if model is None:
         model = load_model()
-    if threshold is None: 
+    if threshold is None:
         threshold = float(open(MODELS_DIR / "threshold.txt").read())
 
     X = preprocess_message(message)
 
-    prob = model.predict_proba(X)[0,1]
+    prob = model.predict_proba(X)[0, 1]
     prediction = 1 if prob >= threshold else 0
     return "spam" if prediction == 1 else "ham"
 
 
 app = typer.Typer()
 
-spam_text = "APPROVED: You qualify for $50,000 loan at 1% interest! No credit check. Apply now: http://instant-loans-usa.com"
+# spam_text = "APPROVED: You qualify for $50,000 loan at 1% interest! No credit check. Apply now: http://instant-loans-usa.com"
+spam_text = "Free iPhone! Click now!!!"
 
 
 @app.command()
@@ -53,7 +54,7 @@ def main(
 ):
     """Classify a single SMS message as spam or ham"""
     result = predict_spam(message=message)
-    typer.echo(f"Result: {result}")
+    typer.echo(f"Result: {result} and the SMS message is {message}")
 
 
 if __name__ == "__main__":

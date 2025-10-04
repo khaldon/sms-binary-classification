@@ -74,13 +74,16 @@ train: requirements
 
 
 SCRIPT_PATH = src/modeling/predict.py
-TEXT ?= "APPROVED: You qualify for $50,000 loan at 1% interest! No credit check. Apply now: http://instant-loans-usa.com"
+TEXT ?=
 
-.PHONY: predict
+.PHONY: predict 
+
 predict: requirements
+ifndef TEXT
+	$(PYTHON_INTERPRETER) $(SCRIPT_PATH)
+else
 	$(PYTHON_INTERPRETER) $(SCRIPT_PATH) -m '$(TEXT)'
-
-
+endif
 
 #################################################################################
 # Self Documenting Commands                                                     #
